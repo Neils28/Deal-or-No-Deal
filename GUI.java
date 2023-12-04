@@ -23,8 +23,15 @@ public class GUI extends Application{
 		
 		StairsPane stairsVB = new StairsPane();
 		moneyBoard moneyHB = new moneyBoard(); 
+		InstructionsPane ordersVB = new InstructionsPane();
+		TopPane topGP = new TopPane();
+		BottomPane bottomGP = new BottomPane();
+		
 		root.setLeft(moneyHB);
+		root.setRight(ordersVB);
+		root.setTop(topGP);
 		root.setCenter(stairsVB); 
+		root.setBottom(bottomGP);
 		
 		primaryStage.show();
 	}

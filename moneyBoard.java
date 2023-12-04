@@ -5,6 +5,7 @@ import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -24,21 +25,20 @@ public class moneyBoard extends HBox {
 		VBox remainingVB = new VBox(2);
 		VBox outVB = new VBox(2);
 
-		TextField remainingTF = new TextField("REMAINING");
-		remainingTF.setPadding(new Insets(20, 20, 10, 20));
-		remainingTF.setStyle("-fx-text-fill: gold;");
-		remainingTF.setFont(new Font("Impact", 24));
-		
-//		Label remainingLB = new Label("REMAINING");
-//		remainingLB.setPadding(new Insets(20, 20, 10, 20));
-//		remainingLB.setTextFill(Color.GOLD);
-//		remainingLB.setFont(new Font("Impact", 24));
-//		remainingLB.setBackground(Color.BLACK);
-		
+		Label remainingLB = new Label("REMAINING"); // Test
+		remainingLB.setPadding(new Insets(20, 20, 10, 20));
+		remainingLB.setTextFill(Color.GOLD);
+		remainingLB.setFont(new Font("Impact", 24));
+
 		Label outLB = new Label("OUT");
 		outLB.setPadding(new Insets(20, 20, 10, 55));
 		outLB.setTextFill(Color.BLACK);
 		outLB.setFont(new Font("Impact", 24));
+
+		GridPane gp = new GridPane();
+		gp.setHgap(0);
+		gp.setVgap(0);
+		gp.setGridLinesVisible(true);
 
 		Line horLine = new Line(10.0f, 10.0f, 155.0f, 10.0f);
 		Group group2 = new Group(horLine);
@@ -55,7 +55,7 @@ public class moneyBoard extends HBox {
 		vertLine.setTranslateX(100);
 		vertLine.setTranslateY(100);
 
-		remainingVB.getChildren().addAll(remainingTF, group2);
+		remainingVB.getChildren().addAll(remainingLB, group2);
 		outVB.getChildren().addAll(outLB, group3);
 
 		this.getChildren().addAll(remainingVB, group, outVB);
