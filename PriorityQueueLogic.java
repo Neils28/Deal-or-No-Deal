@@ -1,111 +1,85 @@
 package dealorNoDeal;
 
+import javafx.scene.control.Button;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.PriorityQueue;
-import java.util.Scanner;
+import javafx.event.ActionEvent;
 
 public class PriorityQueueLogic extends Case {
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+	Case casesInstance = new Case();
+	int[] casesArrayTotal = casesInstance.casesArray;
+	PriorityQueue<Integer> priorityQueue = new PriorityQueue<>();
+	LinkedList<List<Integer>> linkedList = new LinkedList<>();
 
-        Case casesInstance = new Case();
+	// Constructor that takes an int[] as a parameter
+	public PriorityQueueLogic(int[] casesArrayTotal) {
+		this.casesArrayTotal = casesArrayTotal;
+	}
 
-        // Access the casesArray from the Case class
-        int[] casesArray = casesInstance.casesArray;
+	public void handleButtonClicked(Button button) {
+		// This iterates through the rounds so that only that number of buttons can be
+		// pressed
+		for (int round = 6; round >= 1; round--) {
+			System.out.println("Choose " + round + " cases");
 
-        // Create a PriorityQueue with a permanent number chosen by the user
-        System.out.print("Choose a case (1-26): ");
-        int yourCase = getUserInput(scanner, casesArray);
-        removeFromArray(yourCase, casesArray);
+			List<Integer> selectedCases = new ArrayList<>();
 
-        /**
-         * Priority Queue adds the first case the user picks then the cases that are chosen and then pops them off when done
-         */
-        PriorityQueue<Integer> priorityQueue = new PriorityQueue<>();
-        priorityQueue.add(yourCase);
+			for (int j = 0; j < round; j++) {
+				// Variable selectedCase now equals the button that is pressed
+				int selectedCase = getCaseNumberFromButton(button);
 
-        // Create a LinkedList to store selected sets of numbers
-        LinkedList<List<Integer>> linkedList = new LinkedList<>(); // Linked List is meant to hold the set of cases chosen and their corresponding randomized value inside
-        // TODO: Implement Class for LinkedList logic
+				removeFromArray(selectedCase, casesArrayTotal);
 
-        // Loop to choose and add sets of numbers to the PriorityQueue and then to the
-        // LinkedList
-        for (int i = 6; i >= 1; i--) {
-            List<Integer> selectedCases = new ArrayList<>();
+				if (selectedCases.contains(selectedCase)) {
+					j--; // Reprompt for the same case
+				} else {
+					selectedCases.add(selectedCase);
+					button.setVisible(false);
+				}
+			}
 
-            System.out.print("You have " + i + " number of cases to choose: ");
-            for (int j = 0; j < i; j++) {
-                int selectedCase = getUserInput(scanner, casesArray);
-                removeFromArray(selectedCase, casesArray);
+			// Add the selected numbers to the PriorityQueue
+			priorityQueue.addAll(selectedCases);
 
-                if (selectedCases.contains(selectedCase)) {
-                    System.out.println("You cannot choose the same case more than once. Please choose again.");
-                    j--; // Reprompt for the same case
-                } else {
-                    selectedCases.add(selectedCase);
-                }
-            }
+			// Display the numbers that popped off the PriorityQueue within the LinkedList
+			List<Integer> poppedCases = new ArrayList<>();
+			for (int k = 0; k < round; k++) {
+				int poppedCase = priorityQueue.poll();
+				poppedCases.add(poppedCase);
+			}
+			linkedList.add(new ArrayList<>(poppedCases));
+			
+			// Handle the button logic here (you might want to update UI or perform other
+			// actions)
+			button.setText("Round " + round + " completed");
+			
+			// Reset priorityQueue for the next round
+			priorityQueue.clear();
+		}
+	}
 
-            // Add the selected numbers to the PriorityQueue
-            priorityQueue.addAll(selectedCases);
+	private int getCaseNumberFromButton(Button button) {
+		// Extract the case number from the button text
+		String buttonText = button.getText();
+		try {
+			return Integer.parseInt(buttonText);
+		} catch (NumberFormatException e) {
+			// Handle the case where the button text is not a valid integer
+			System.err.println("Invalid button text: " + buttonText);
+			return -1; // or throw an exception, depending on your error handling strategy
+		}
+	}
 
-            // Display the numbers that popped off the PriorityQueue within the LinkedList
-            List<Integer> poppedCases = new ArrayList<>();
-            for (int k = 0; k < i; k++) {
-                int poppedCase = priorityQueue.poll();
-                poppedCases.add(poppedCase);
-            }
-            linkedList.add(new ArrayList<>(poppedCases));
-
-            // Display the selected numbers
-//            System.out.println("Selected cases: " + selectedCases);
-        }
-
-//        // Display the PriorityQueue
-//        System.out.println("Priority Queue elements: " + priorityQueue);
-//
-//        // Display the LinkedList
-//        System.out.println("Linked List elements: " + linkedList);
-
-        scanner.close();
-    }
-
-    private static int getUserInput(Scanner scanner, int[] validNumbers) {
-        while (true) {
-            try {
-                int input = scanner.nextInt();
-                if (input < 1 || input > 26 || !isValidNumber(input, validNumbers)) {
-                    throw new IllegalArgumentException("Invalid input. Please enter a number between 1 and 26.");
-                }
-                return input;
-            } catch (Exception e) {
-                System.out.println("Invalid input. Please enter a valid number between 1 and 26.");
-                scanner.nextLine(); // Consume the invalid input
-            }
-        }
-    }
-
-    private static boolean isValidNumber(int number, int[] validNumbers) {
-        for (int validNumber : validNumbers) {
-            if (validNumber == number) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private static void removeFromArray(int number, int[] numbersArray) {
-        for (int i = 0; i < numbersArray.length; i++) {
-            if (numbersArray[i] == number) {
-                // Shift the remaining elements to fill the gap
-                System.arraycopy(numbersArray, i + 1, numbersArray, i, numbersArray.length - 1 - i);
-                numbersArray[numbersArray.length - 1] = 0; // Assuming 0 is a valid placeholder for removed elements
-                return;
-            }
-        }
-    }
+	private static void removeFromArray(int number, int[] numbersArray) {
+		for (int i = 0; i < numbersArray.length; i++) {
+			if (numbersArray[i] == number) {
+				// Shift the remaining elements to fill the gap
+				System.arraycopy(numbersArray, i + 1, numbersArray, i, numbersArray.length - 1 - i);
+				numbersArray[numbersArray.length - 1] = 0; // Assuming 0 is a valid placeholder for removed elements
+				return;
+			}
+		}
+	}
 }
-
-

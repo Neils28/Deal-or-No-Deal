@@ -6,8 +6,24 @@ import java.util.Random;
 public class Case {
     protected int[] casesArray;
     protected double[] doubleValuesArray;
+    
+    public int[] getCasesArray() {
+		return casesArray;
+	}
 
-    public Case() {
+	public void setCasesArray(int[] casesArray) {
+		this.casesArray = casesArray;
+	}
+
+	public double[] getDoubleValuesArray() {
+		return doubleValuesArray;
+	}
+
+	public void setDoubleValuesArray(double[] doubleValuesArray) {
+		this.doubleValuesArray = doubleValuesArray;
+	}
+
+	public Case() {
         // Initialize the array of integers from 1 to 26
         casesArray = new int[26];
         for (int i = 0; i < 26; i++) {
@@ -46,14 +62,14 @@ public class Case {
         return newArray;
     }
 
-    public static void main(String[] args) {
-        Case myCase = new Case();
-
-        // Test the chooseRandomValue method
-        for (int i = 0; i < 10; i++) {
-            double chosenValue = myCase.chooseRandomValue();
-            System.out.println("Chosen value: " + chosenValue);
-        }
-    }
+//    public static void main(String[] args) {
+//        Case myCase = new Case();
+//
+//        // Test the chooseRandomValue method
+//        for (int i = 0; i < 10; i++) {
+//            double chosenValue = myCase.chooseRandomValue();
+//            System.out.println("Case Value " + chosenValue);
+//        }
+//    }
 }
 
