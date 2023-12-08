@@ -7,14 +7,12 @@ import java.util.ArrayList;
 // -Figure out how to reference buttons in for loop where they are created 
 // -Write in where the button/cases are sent to the Queue in Event Handler
 
-import java.util.PriorityQueue;
+
 import javafx.application.Application;
 import javafx.event.ActionEvent;
-import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class DealOrNoDealApp extends Application {
@@ -62,9 +60,8 @@ public class DealOrNoDealApp extends Application {
 	}
 
 	public void handleButtonClicked(ActionEvent event, ArrayList<Integer> caseNumbers) {
+		//Set the Current Round Number
 		int currentRoundNum = 1;
-		//int[] casesArrayQueue = priorityQueueInstance.casesArrayTotal; //Created instance of PriorityQueueLogic class set to be same as class
-		
 		
 		// This is for Round 1 and 8: where only one case is chosen
 		if (currentRoundNum == 1 || currentRoundNum == 8) {
@@ -105,16 +102,16 @@ public class DealOrNoDealApp extends Application {
 	}
 
 	// Method to add the buttons to the stairs VBOX
-	private void populateStairs(HBox stair, int[] casesArrayT, int start, int end) {
+	public void populateStairs(HBox stair, int[] casesArrayT, int start, int end) {
 		for (int i = start; i < end; i++) {
 			Button caseButton = new Button(Integer.toString(casesArrayT[i]));
 			// Customize the appearance of the button to look like a briefcase
 			caseButton.setStyle("-fx-background-color: #D3D3D3; -fx-font-size: 18;");
 			// Add an event handler to the button
 
-	        // Pass the value of the button to the event handler
-			caseButton.setOnAction(event -> handleButtonClicked(event, Integer.parseInt(caseButton.getText())));
-
+	        // Pass the value of the button to the event handler, so that 
+            caseButton.setOnAction(event -> handleButtonClicked(event, caseNumbers));
+            
 			stair.getChildren().add(caseButton);
 		}
 	}
