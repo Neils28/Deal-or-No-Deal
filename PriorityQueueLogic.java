@@ -11,16 +11,27 @@ public class PriorityQueueLogic extends Case {
 	Case casesInstance = new Case();
 	int[] casesArrayTotal = casesInstance.casesArray;
 	PriorityQueue<Integer> priorityQueue = new PriorityQueue<>();
+	
+	//TODO this will be replaced by Linked List Class
 	LinkedList<List<Integer>> linkedList = new LinkedList<>();
 
-	// Constructor that takes an int[] as a parameter
 	public PriorityQueueLogic(int[] casesArrayTotal) {
 		this.casesArrayTotal = casesArrayTotal;
 	}
-
-	public void handleButtonClicked(Button button) {
-		// This iterates through the rounds so that only that number of buttons can be
-		// pressed
+	
+	private int buttonClickCounter = 0;
+	
+	public void handleButtonClicked(ActionEvent event) {
+		
+		Button casesButton = (Button) event.getSource();
+		
+		for(int chosenNumCases = 0; chosenNumCases < 4;) {
+			chosenCase
+			chosenNumCase
+		}
+		
+		
+		
 		for (int round = 6; round >= 1; round--) {
 			System.out.println("Choose " + round + " cases");
 
@@ -32,12 +43,8 @@ public class PriorityQueueLogic extends Case {
 
 				removeFromArray(selectedCase, casesArrayTotal);
 
-				if (selectedCases.contains(selectedCase)) {
-					j--; // Reprompt for the same case
-				} else {
-					selectedCases.add(selectedCase);
-					button.setVisible(false);
-				}
+				// Add the case chosen to the new array of Cases
+				selectedCases.add(selectedCase);
 			}
 
 			// Add the selected numbers to the PriorityQueue
@@ -50,14 +57,43 @@ public class PriorityQueueLogic extends Case {
 				poppedCases.add(poppedCase);
 			}
 			linkedList.add(new ArrayList<>(poppedCases));
-			
+
 			// Handle the button logic here (you might want to update UI or perform other
 			// actions)
-			button.setText("Round " + round + " completed");
-			
+
+			// Increment button click counter
+			buttonClickCounter++;
+
+			if (buttonClickCounter == round) {
+				// Display buttons for continuing or taking the banker's offer
+				displayEndRoundButtons();
+			}
+
 			// Reset priorityQueue for the next round
 			priorityQueue.clear();
 		}
+	}
+
+	private void displayEndRoundButtons() {
+		// Add code here to display two buttons for continuing or taking the banker's
+		// offer
+		// For example:
+		Button continueButton = new Button("Continue");
+		continueButton.setOnAction(event -> {
+			// Code to restart the for loop
+			buttonClickCounter = 0;
+			// Add any other necessary logic
+		});
+
+		Button takeOfferButton = new Button("Take Offer");
+		takeOfferButton.setOnAction(event -> {
+			// Code to end the game
+			// Add any other necessary logic
+		});
+
+		// Add these buttons to your UI (e.g., to a layout or container)
+		// For example:
+		// yourLayout.getChildren().addAll(continueButton, takeOfferButton);
 	}
 
 	private int getCaseNumberFromButton(Button button) {
