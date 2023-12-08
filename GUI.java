@@ -12,35 +12,55 @@ import javafx.stage.Stage;
  * @author Nash Kraemer
  * @version 11/30/2023
  */
-public class GUI extends Application{
+public class GUI extends BorderPane{
 
-	
-	@Override
-	public void start(Stage primaryStage) {
-		BorderPane root = new BorderPane();
-		Scene scene = new Scene(root, 1200, 750);
-		primaryStage.setScene(scene);
+	private StairsPane stairsVB;
+	private moneyBoard moneyHB;
+	private InstructionsPane ordersVB;
+	private TopPane topGP;
+	private BottomPane bottomGP;
+
+	public StairsPane getSP() {
+		return stairsVB;
+	}
+
+	public moneyBoard getMB() {
+		return moneyHB;
+	}
+
+	public InstructionsPane getIP() {
+		return ordersVB;
+	}
+
+	public TopPane getTP() {
+		return topGP;
+	}
+
+	public BottomPane getBP() {
+		return bottomGP;
+	}
+
+	public GUI() {
+		stairsVB = new StairsPane();
+		moneyHB = new moneyBoard(); 
+		ordersVB = new InstructionsPane(this);
+		topGP = new TopPane();
+		bottomGP = new BottomPane(this);
 		
-		StairsPane stairsVB = new StairsPane();
-		moneyBoard moneyHB = new moneyBoard(); 
-		InstructionsPane ordersVB = new InstructionsPane();
-		TopPane topGP = new TopPane();
-		BottomPane bottomGP = new BottomPane();
+		this.setLeft(moneyHB);
+		this.setRight(ordersVB);
+		this.setTop(topGP);
+		this.setCenter(stairsVB); 
+		this.setBottom(bottomGP);
 		
-		root.setLeft(moneyHB);
-		root.setRight(ordersVB);
-		root.setTop(topGP);
-		root.setCenter(stairsVB); 
-		root.setBottom(bottomGP);
 		
-		primaryStage.show();
 	}
 	
-	
-	
-	
+	public void nextM() {
+		ordersVB.next(moneyHB,ordersVB,topGP,stairsVB,bottomGP);
+	}
+
 	
 	public static void main(String[] args) {
-		launch(args);
 	}
 }
