@@ -1,4 +1,4 @@
-package deal.Game;
+package GUI;
 
 import java.util.EmptyStackException;
 

@@ -1,4 +1,5 @@
-package dealorNoDeal;
+package GUI;
+
 
 import javafx.application.Application;
 import javafx.geometry.Insets;

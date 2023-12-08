@@ -1,4 +1,4 @@
-package dealorNoDeal;
+package GUI;
 
 import java.util.Arrays;
 import java.util.Random;
@@ -72,4 +72,3 @@ public class Case {
 //        }
 //    }
 }
-

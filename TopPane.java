@@ -27,7 +27,10 @@ public class TopPane extends GridPane implements EventHandler<ActionEvent> {
 	private Label score1;
 	private Label score2;
 	private Label score3;
-	
+	private Label player1;
+	private Label player2;
+	private Label player3;
+
 	public void handle(ActionEvent event) {
 		if(event.getSource() == delete) {
 			score1.setText(pastTF.getText());
@@ -46,24 +49,43 @@ public class TopPane extends GridPane implements EventHandler<ActionEvent> {
 		delete = new Button("add");
 		delete.setOnAction(this);
 		
-		 leaderboard = new Label("Leaderboard:");
-		 score1 = new Label("Player 1: 1,000");
-		 score2 = new Label("Player 2: 10,000");
-		 score3 = new Label("Player 3: 100,000");
+		 leaderboard = new Label("Leaderboard:");		 
+		 player1 = new Label("Player 1:");
+		 player2 = new Label("Player 2:");
+		 player3 = new Label("Player 3:");
+		 
+		 score1 = new Label("1,000");
+		 score2 = new Label("10,000");
+		 score3 = new Label("100,000");
+		 
 		 JFrame frame = new JFrame();
 		
 
 		this.add(leaderboard, 0, 2);
 		leaderboard.setFont(new Font("Eurostile", 25));
-
-		this.add(score1, 46, 2);
+		
+		this.add(player1, 44, 2);
+		this.add(score1, 45, 2);
+		
+		this.add(player2, 46, 2);
 		this.add(score2, 47, 2);
-		this.add(score3, 48, 2);
+
+		this.add(player3, 48, 2);
+		this.add(score3, 49, 2);
+
 		this.add(pastTF, 50, 2);
 		this.add(delete, 52, 2);
 		delete.setOnAction(this);
 
 
+		
+		
+		
+		
+		
+		
+		
+		
 		
 	}
 

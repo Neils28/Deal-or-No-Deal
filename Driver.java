@@ -1,4 +1,4 @@
-package deal.Game;
+package GUI;
 
 import javafx.application.Application;
 import javafx.scene.Scene;

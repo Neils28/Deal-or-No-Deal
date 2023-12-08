@@ -1,4 +1,4 @@
-package dealorNoDeal;
+package GUI;
 
 import javafx.scene.control.Button;
 import java.util.ArrayList;
@@ -25,10 +25,10 @@ public class PriorityQueueLogic extends Case {
 		
 		Button casesButton = (Button) event.getSource();
 		
-		for(int chosenNumCases = 0; chosenNumCases < 4;) {
-			chosenCase
-			chosenNumCase
-		}
+//		for(int chosenNumCases = 0; chosenNumCases < 4;) {
+//			chosenCase
+//			chosenNumCase
+//		}
 		
 		
 		

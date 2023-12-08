@@ -1,4 +1,4 @@
-package deal.Game;
+package GUI;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -13,7 +13,12 @@ import javafx.stage.Stage;
  * @version 11/30/2023
  */
 public class GUI extends BorderPane{
-
+	Case cases = new Case();
+	StairsPane sp = new StairsPane(cases);
+	
+	
+	
+	
 	private StairsPane stairsVB;
 	private moneyBoard moneyHB;
 	private InstructionsPane ordersVB;
@@ -41,7 +46,7 @@ public class GUI extends BorderPane{
 	}
 
 	public GUI() {
-		stairsVB = new StairsPane();
+		stairsVB = new StairsPane(cases);
 		moneyHB = new moneyBoard(); 
 		ordersVB = new InstructionsPane(this);
 		topGP = new TopPane();

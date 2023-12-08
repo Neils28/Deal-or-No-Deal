@@ -1,4 +1,4 @@
-package deal.Game;
+package GUI;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -27,13 +27,15 @@ public class InstructionsPane extends VBox implements EventHandler<ActionEvent>{
 	private Label In8;
 	private Label In9;
 	
+	private GUI[] temp;
+	
 	public String getInstruction() {
 		return In1.getText();
 	}
 	
 	private Button test; // Test
 	
-	public InstructionsPane(){
+	public InstructionsPane(GUI gui){
 		
 		this.setPadding(new Insets(0, 50, 0, 0));
 		instructionsStack = new ArrayStack(26);
@@ -55,6 +57,8 @@ public class InstructionsPane extends VBox implements EventHandler<ActionEvent>{
 		
 		this.getChildren().addAll(In1,In2,In3,In4,In5,In6,In7,In8,In9,test);
 
+		temp = new GUI[1];
+		temp[0] = gui;
 	}
 
 	public void populate() {
@@ -87,7 +91,7 @@ public class InstructionsPane extends VBox implements EventHandler<ActionEvent>{
 		instructionsStack.push("Pick Your Case");
 	}
 	
-	public void next() {
+	public void next(moneyBoard MB, InstructionsPane IP, TopPane TP, StairsPane SP, BottomPane BP) {
 		In1.setText(In2.getText());
 		In2.setText(In3.getText());
 		In3.setText(In4.getText());
@@ -97,13 +101,25 @@ public class InstructionsPane extends VBox implements EventHandler<ActionEvent>{
 		In7.setText(In8.getText());
 		In8.setText(In9.getText());
 		In9.setText((String) instructionsStack.pop());
+		
+		if(In1.getText().equals("Bank Offer")) {
+			temp[0].getBP().getBank().getDeal().setDisable(false);
+			temp[0].getBP().getBank().getNoDeal().setDisable(false);
+		}
+		else if(In1.getText().equals("Pick 6 Cases") || In1.getText().equals("Pick 5 Cases") || In1.getText().equals("Pick 4 Cases")
+				|| In1.getText().equals("Pick 3 Cases") || In1.getText().equals("Pick 2 Cases") || In1.getText().equals("Pick 1 Case")) {
+			temp[0].getSP();
+		}
+		else if(In1.getText().equals("Open The Cases") || In1.getText().equals("Open The Case")) {
+			
+		}
 	}
 	
 	@Override
 	public void handle(ActionEvent event) {
-		if (event.getSource() == test) {
-			next();
-		}
+//		if (event.getSource() == test) {
+//			next();
+//		}
 	}
 	
 }

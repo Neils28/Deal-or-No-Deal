@@ -1,4 +1,4 @@
-package deal.Game;
+package GUI;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
