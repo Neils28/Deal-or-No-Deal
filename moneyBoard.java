@@ -80,9 +80,6 @@ public class moneyBoard extends HBox implements EventHandler<ActionEvent>{
 		vertLine.setTranslateX(100);
 		vertLine.setTranslateY(100);
 
-		remainingVB.getChildren().addAll(remainingLB, group2);
-		outVB.getChildren().addAll(outLB, group3);
-
 		this.getChildren().addAll(remainingVB, group, outVB);
 
 		remaining = new ArrayList<>();
@@ -108,14 +105,21 @@ public class moneyBoard extends HBox implements EventHandler<ActionEvent>{
 		remaining.add((Integer) 750000);
 		remaining.add((Integer) 1000000);
 
+		remainingMN = new VBox(2);
+		outMN = new VBox(2);
+		
 		for (int i = 0; i < remaining.size(); i++) {
 			int temp = remaining.get(i);
 			String s = String.valueOf(temp);
 			Label L = new Label(s);
 			L.setPadding(new Insets(0, 0, 0, 50));
 			L.setFont(new Font("Eurostile", 15));
-			remainingVB.getChildren().addAll(L);
+			remainingMN.getChildren().addAll(L);
 		}
+		
+		remainingVB.getChildren().addAll(remainingLB, group2,remainingMN);
+		outVB.getChildren().addAll(outLB, group3,outMN);
+		
 		out = new SortedLinkedList<>();
 		test = new Button();
 		test.setOnAction(this);
@@ -123,8 +127,6 @@ public class moneyBoard extends HBox implements EventHandler<ActionEvent>{
 	}
 
 	public void remove(Integer value) {
-		remainingMN = new VBox(2);
-		outMN = new VBox(2);
 		remaining.remove(value);
 		remainingMN.getChildren().clear();
 		for (int i = 0; i < remaining.size(); i++) {
@@ -141,10 +143,7 @@ public class moneyBoard extends HBox implements EventHandler<ActionEvent>{
 		ListNode<Integer> node = out.getHead();
 		String s = String.valueOf(value);
 		Label L = new Label(s);
-		L.setPadding(new Insets(0, 0, 0, 50));
-		L.setFont(new Font("Eurostile", 15));
-		remainingMN.getChildren().addAll(L);
-		
+	
 		for (int i = 0; i< out.getSize();i++) {
 			node = node.getNext();
 			s = String.valueOf(value);
@@ -153,6 +152,18 @@ public class moneyBoard extends HBox implements EventHandler<ActionEvent>{
 			L.setFont(new Font("Eurostile", 15));
 			outMN.getChildren().addAll(L);
 		}
+	}
+	
+	public Integer getTotal() {
+		Integer temp = (Integer) 0;
+		for (int i = 0; i < remaining.size(); i++) {
+			temp = temp + remaining.get(i);
+		}
+		return temp;
+	}
+	
+	public int getSize() {
+		return remaining.size();
 	}
 	
 	@Override

@@ -1,4 +1,4 @@
-package GUI;
+package deal.Game;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -33,8 +33,6 @@ public class InstructionsPane extends VBox implements EventHandler<ActionEvent>{
 		return In1.getText();
 	}
 	
-	private Button test; // Test
-	
 	public InstructionsPane(GUI gui){
 		
 		this.setPadding(new Insets(0, 50, 0, 0));
@@ -52,46 +50,36 @@ public class InstructionsPane extends VBox implements EventHandler<ActionEvent>{
 		In8 = new Label((String) instructionsStack.pop());
 		In9 = new Label((String) instructionsStack.pop());
 		
-		test = new Button("Next Test"); // Test
-		test.setOnAction(this);
-		
-		this.getChildren().addAll(In1,In2,In3,In4,In5,In6,In7,In8,In9,test);
+		this.getChildren().addAll(In1,In2,In3,In4,In5,In6,In7,In8,In9);
 
 		temp = new GUI[1];
 		temp[0] = gui;
 	}
 
-	public void populate() {
-
+	private void populate() {
 		instructionsStack.push("Final Offer");
 		instructionsStack.push("Bank Offer");
-		instructionsStack.push("Open The Case");
-		instructionsStack.push("Pick 1 Case");
-		instructionsStack.push("Bank Offer");
-		instructionsStack.push("Open The Case");
-		instructionsStack.push("Pick 1 Case");
-		instructionsStack.push("Bank Offer");
-		instructionsStack.push("Open The 2 Cases");
-		instructionsStack.push("Pick 2 Cases");
-		instructionsStack.push("Bank Offer");
-		instructionsStack.push("Open The 2 Cases");
-		instructionsStack.push("Pick 2 Cases");
-		instructionsStack.push("Bank Offer");
-		instructionsStack.push("Open The 3 Cases");
-		instructionsStack.push("Pick 3 Cases");
-		instructionsStack.push("Bank Offer");
-		instructionsStack.push("Open The 4 Cases");
+		instructionsStack.push("Open The Cases");
 		instructionsStack.push("Pick 4 Cases");
 		instructionsStack.push("Bank Offer");
-		instructionsStack.push("Open The 5 Cases");
-		instructionsStack.push("Pick 5 Cases");
+		instructionsStack.push("Open The Cases");
+		instructionsStack.push("Pick 4 Cases");
 		instructionsStack.push("Bank Offer");
-		instructionsStack.push("Open The 6 Cases");
-		instructionsStack.push("Pick 6 Cases");
+		instructionsStack.push("Open The Cases");
+		instructionsStack.push("Pick 4 Cases");
+		instructionsStack.push("Bank Offer");
+		instructionsStack.push("Open The Cases");
+		instructionsStack.push("Pick 4 Cases");
+		instructionsStack.push("Bank Offer");
+		instructionsStack.push("Open The Cases");
+		instructionsStack.push("Pick 4 Cases");
+		instructionsStack.push("Bank Offer");
+		instructionsStack.push("Open The Cases");
+		instructionsStack.push("Pick 4 Cases");
 		instructionsStack.push("Pick Your Case");
 	}
 	
-	public void next(moneyBoard MB, InstructionsPane IP, TopPane TP, StairsPane SP, BottomPane BP) {
+	public void next(moneyBoard MB,InstructionsPane IP, TopPane TP, StairsPane SP, BottomPane BP) {
 		In1.setText(In2.getText());
 		In2.setText(In3.getText());
 		In3.setText(In4.getText());
@@ -103,23 +91,22 @@ public class InstructionsPane extends VBox implements EventHandler<ActionEvent>{
 		In9.setText((String) instructionsStack.pop());
 		
 		if(In1.getText().equals("Bank Offer")) {
+			temp[0].getBP().getBank().giveOffer(temp[0].getMB().getTotal(),temp[0].getMB().getSize());
 			temp[0].getBP().getBank().getDeal().setDisable(false);
 			temp[0].getBP().getBank().getNoDeal().setDisable(false);
 		}
-		else if(In1.getText().equals("Pick 6 Cases") || In1.getText().equals("Pick 5 Cases") || In1.getText().equals("Pick 4 Cases")
-				|| In1.getText().equals("Pick 3 Cases") || In1.getText().equals("Pick 2 Cases") || In1.getText().equals("Pick 1 Case")) {
+		else if(In1.getText().equals("Pick 4 Cases")) {
 			temp[0].getSP();
-		}
+		}	
 		else if(In1.getText().equals("Open The Cases") || In1.getText().equals("Open The Case")) {
 			
 		}
 	}
-	
+
+
 	@Override
 	public void handle(ActionEvent event) {
-//		if (event.getSource() == test) {
-//			next();
-//		}
+
 	}
 	
 }
