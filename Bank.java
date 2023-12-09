@@ -13,6 +13,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
 
@@ -25,7 +27,7 @@ public class Bank extends HBox implements EventHandler<ActionEvent> {
 	private Button test;
 
 	private GUI[] temp;
-	
+
 	private JFrame popup;
 
 	public Button getDeal() {
@@ -39,17 +41,20 @@ public class Bank extends HBox implements EventHandler<ActionEvent> {
 	public TextField getOffer() {
 		return Offer;
 	}
-	
+
 	public Bank(GUI gui) {
 		temp = new GUI[1];
 		temp[0] = gui;
 
 		Deal = new Button("Deal");
 		No_Deal = new Button("No Deal");
+		Deal.setStyle("-fx-background-color: GOLD; -fx-text-fill: BLACK;");
+		No_Deal.setStyle("-fx-background-color: BLACK; -fx-text-fill: GOLD;");
 		Deal.setOnAction(this);
+		Deal.setDisable(true);
 		No_Deal.setOnAction(this);
 		No_Deal.setDisable(true);
-		Deal.setDisable(true);
+
 		Offer = new TextField();
 		Offer.setEditable(false);
 		this.setSpacing(10);
@@ -72,6 +77,14 @@ public class Bank extends HBox implements EventHandler<ActionEvent> {
 		Offer.setText(bankOfferS);
 	}
 
+	class endStage extends Stage {
+		endStage(){
+			Label winner = new Label("You won $" + Offer.getText());
+			this.setScene(new Scene(winner, 300, 200));
+		}
+
+	}
+
 	@Override
 	public void handle(ActionEvent event) {
 		if (event.getSource() == No_Deal) {
@@ -79,17 +92,12 @@ public class Bank extends HBox implements EventHandler<ActionEvent> {
 			Deal.setDisable(true);
 			temp[0].nextM();
 			Offer.clear();
-		} else if (event.getSource() == Deal) {
+		}
+		if (event.getSource() == Deal && (Offer.getText().equals("") || (Offer.getText().equals(null)) == false)) {
 			No_Deal.setDisable(true);
 			Deal.setDisable(true);
-			
-			popup = new JFrame("popup!");
-			String message = "You Won $" + Offer.getText();
-            JOptionPane.showMessageDialog(null, message, "Winner", JOptionPane.INFORMATION_MESSAGE);
-			popup.add(popup, new HBox(new Label("Winner")));
-			popup.setVisible(true);
-			popup.setSize(300, 200);
-			
+			endStage popup = new endStage();
+			popup.show();
 			Offer.clear();
 		}
 		if (event.getSource() == test) {
