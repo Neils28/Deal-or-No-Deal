@@ -1,8 +1,10 @@
-package GUI;
+package dealorNoDeal;
+
 
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 
 /**
  * BottomPane GridPane
@@ -10,8 +12,11 @@ import javafx.scene.layout.GridPane;
  * @version 12/1/2023
  */
 public class BottomPane extends GridPane{
+	
 
 	private Bank bank;
+	private Bank Deal;
+	private DealOrNoDealApp casesConfirmationButton;
 	
 	public Bank getBank() {
 		return bank;
@@ -28,8 +33,11 @@ public class BottomPane extends GridPane{
 		bank = new Bank(gui);
 		this.add(bank, 80, 3);
 		
-		
 	}
+	
+	
+	
+	
 	public void handle(ActionEvent event) {
 		
 	}

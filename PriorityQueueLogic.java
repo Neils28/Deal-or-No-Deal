@@ -1,11 +1,8 @@
 package dealorNoDeal;
 
-import javafx.scene.control.Button;
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.PriorityQueue;
-import javafx.event.ActionEvent;
 
 public class PriorityQueueLogic extends Case {
 	//Instance of the Class Cases
@@ -21,7 +18,7 @@ public class PriorityQueueLogic extends Case {
 	int poppedCase;
 	
 	// Display the numbers that popped off the PriorityQueue within the LinkedList
-	LinkedList<Integer> CasesLL = new LinkedList<>();
+	SortedLinkedList<Integer> CasesLL = new SortedLinkedList<>();
 	//TODO Replace this with Nathan's LinkedList
 	
 	//Constructor for the Priority Queue 
@@ -33,10 +30,11 @@ public class PriorityQueueLogic extends Case {
 	public void addChosenCase(ArrayList<Integer> caseNumbers) {
 		// Add the chosen case number to the priority queue
 		priorityQueue.addAll(caseNumbers);
-		//Cases are 
+		
+		//Cases are Taken off the Priority Queue and then put into the LinkedList
 		if(priorityQueue.size() > 1) {
 			int poppedCase = priorityQueue.poll();
-			CasesLL.add(poppedCase);
+			CasesLL.addItem(poppedCase);
 		}
 	}
 

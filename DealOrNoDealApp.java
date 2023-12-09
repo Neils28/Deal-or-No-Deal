@@ -3,61 +3,34 @@ package dealorNoDeal;
 import java.util.ArrayList;
 
 //TODO 
-// -Create the logic for the PriorityQueue
-// -Figure out how to reference buttons in for loop where they are created 
-// -Write in where the button/cases are sent to the Queue in Event Handler
+// -Create the constructor that talks with StairPane so that everything is displayed in StairsPane
+// -Create the end of the game logic 
 
-
-import javafx.application.Application;
 import javafx.event.ActionEvent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
-import javafx.stage.Stage;
 
-public class DealOrNoDealApp extends Application {
+public class DealOrNoDealApp {
 
 	
 	//Created array of the buttons
-	protected Button caseButton;
+	private Button caseButton;
 	
 	//Button to take Deal from Banker
-	protected Button Deal;
+	private Bank Deal;
 			
 	//This is instance of the PriorityQueueLogic class
 	PriorityQueueLogic priorityQueueInstance = new PriorityQueueLogic();
 
 	// Button that sends cases to the Queue
-	Button casesConfirmationButton; 
+	private Button casesConfirmationButton; 
 
 	//Create an array of the caseNumbers that are chosen
 	ArrayList<Integer> caseNumbers = new ArrayList<Integer>();
 	
-	public static void main(String[] args) {
-		launch(args);
-	}
-
-	@Override
-	public void start(Stage primaryStage) {
-		primaryStage.setTitle("Deal or No Deal");
-
-		Case cases = new Case();
-		StairsPane stairsPane = new StairsPane(cases);
-
-		Scene scene = new Scene(stairsPane, 800, 600);
-
-		primaryStage.setScene(scene);
-		primaryStage.show();
-
-		Button casesConfirmationButton = new Button();
-		casesConfirmationButton.setVisible(false);
-		casesConfirmationButton.setText("Submit Chosen Cases: ");
-
-		Button Deal = new Button();
-		Deal.setVisible(false);
-		Deal.setText("Deal");
 	
-	}
+	Case cases = new Case();
+	StairsPane stairsPane = new StairsPane(cases, null);
 
 	public void handleButtonClicked(ActionEvent event, ArrayList<Integer> caseNumbers) {
 		//Set the Current Round Number
@@ -89,14 +62,14 @@ public class DealOrNoDealApp extends Application {
 					casesConfirmationButton.setVisible(true);
 				}
 				if (event.getSource() == casesConfirmationButton) {
-					Deal.setVisible(true);
+					priorityQueueInstance.addChosenCase(caseNumbers); // Send the caseNumber to PriorityQueueLogic
 				}
 			}
 		}
 		// This is the end of the Game
 		if (event.getSource() == Deal || currentRoundNum > 8) {
 			System.out.println("Congratulations. Game over brother");
-			// TODO Change this later, this is the Deal button that ends the game
+			// TODO Change this GUI later, this pops up when the deal button is clicked that ends the game
 		}
 
 	}
@@ -109,11 +82,10 @@ public class DealOrNoDealApp extends Application {
 			caseButton.setStyle("-fx-background-color: #D3D3D3; -fx-font-size: 18;");
 			// Add an event handler to the button
 
-	        // Pass the value of the button to the event handler, so that 
+	        // Pass the value of the button to the event handler, so th
             caseButton.setOnAction(event -> handleButtonClicked(event, caseNumbers));
             
 			stair.getChildren().add(caseButton);
 		}
 	}
-
 }
