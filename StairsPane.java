@@ -1,5 +1,4 @@
-package dealorNoDeal;
-
+package deal.Game;
 import javafx.geometry.Insets;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -12,10 +11,10 @@ public class StairsPane extends VBox {
 	private DealOrNoDealApp dealOND;
 	
 	//Constructor for the StairsPane Class
-    public StairsPane(Case cases) {
-        this.dealOND = cases;
-        cases.populateStairs(null, null, BOTTOM_INVALID, BOTTOM_INVALID);
-    }
+//    public StairsPane(Case cases) {
+//        this.dealOND = cases;
+//        cases.populateStairs(null, null, BOTTOM_INVALID, BOTTOM_INVALID);
+//    }
 	
 	public StairsPane(Case cases, DealOrNoDealApp dealOND) {
 
