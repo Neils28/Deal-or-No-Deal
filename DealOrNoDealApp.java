@@ -11,7 +11,6 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 
 public class DealOrNoDealApp {
-
 	
 	//Created array of the buttons
 	private Button caseButton;
@@ -27,11 +26,25 @@ public class DealOrNoDealApp {
 
 	//Create an array of the caseNumbers that are chosen
 	ArrayList<Integer> caseNumbers = new ArrayList<Integer>();
-	
-	
+
 	Case cases = new Case();
 	StairsPane stairsPane = new StairsPane(cases, null);
 
+	public DealOrNoDealApp(HBox stair, int[] casesArrayT, int start, int end){
+		for (int i = start; i < end; i++) {
+			Button caseButton = new Button(Integer.toString(casesArrayT[i]));
+			// Customize the appearance of the button to look like a briefcase
+			caseButton.setStyle("-fx-background-color: #D3D3D3; -fx-font-size: 18;");
+			// Add an event handler to the button
+			
+	        // Pass the value of the button to the event handler, so th
+            caseButton.setOnAction(event -> handleButtonClicked(event, caseNumbers));
+            
+			stair.getChildren().add(caseButton);
+		}
+	}
+	
+	
 	public void handleButtonClicked(ActionEvent event, ArrayList<Integer> caseNumbers) {
 		//Set the Current Round Number
 		int currentRoundNum = 1;
@@ -72,20 +85,5 @@ public class DealOrNoDealApp {
 			// TODO Change this GUI later, this pops up when the deal button is clicked that ends the game
 		}
 
-	}
-
-	// Method to add the buttons to the stairs VBOX
-	public void populateStairs(HBox stair, int[] casesArrayT, int start, int end) {
-		for (int i = start; i < end; i++) {
-			Button caseButton = new Button(Integer.toString(casesArrayT[i]));
-			// Customize the appearance of the button to look like a briefcase
-			caseButton.setStyle("-fx-background-color: #D3D3D3; -fx-font-size: 18;");
-			// Add an event handler to the button
-
-	        // Pass the value of the button to the event handler, so th
-            caseButton.setOnAction(event -> handleButtonClicked(event, caseNumbers));
-            
-			stair.getChildren().add(caseButton);
-		}
 	}
 }
