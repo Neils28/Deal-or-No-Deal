@@ -1,12 +1,13 @@
-package GUI;
-
+package deal.Game;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
-import GUI.TimerDemo.RemindTask;
-
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
 import javafx.event.ActionEvent;
@@ -19,105 +20,105 @@ import javafx.scene.text.Font;
 
 /**
  * TopPane GridPane
+ * 
  * @author nashk
  * @version 12/1/2023
  */
 
 public class TopPane extends GridPane implements EventHandler<ActionEvent> {
-	
-	private TimerDemo timer;
+
+//	private TimerBoard timer;
 	private TextField pastTF;
 	private Button delete;
 	private Button save;
 	private Label leaderboard;
-	private Label score1;
-	private Label score2;
-	private Label score3;
-	private Label player1;
-	private Label player2;
-	private Label player3;
+	private TextField scores;
 	private String savedText;
-	
+
+	private FileWriter output;
+
 	public String getSavedText() {
-        return savedText;
-    }
+		return savedText;
+	}
 
 	public void handle(ActionEvent event) {
-		if(event.getSource() == delete) {
-			score1.setText(pastTF.getText());
-		}	
-		if(event.getSource() == save) {
-			savedText = pastTF.getText();
+		if (event.getSource() == delete) {
+			scores.setText(pastTF.getText());
+		}
+		if (event.getSource() == save) {
+			try {
+				FileWriter output  = new FileWriter("leaderBoard.txt");
+				output.write(savedText + "\n" + pastTF.getText());
+				output.close(); 
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
+
+	static CircularLinkedList<String> myList = new CircularLinkedList<>();
+
 	
-	public TopPane() {
-		
-		  
-		
+	public TopPane() throws IOException {
+		scores = new TextField();
 		savedText = ("");
-		
+
 		this.setPrefHeight(50);
 		this.setHgap(10);
 		this.setVgap(10);
-		
+
 		pastTF = new TextField();
 		pastTF.setOnAction(this);
-		
+
 		delete = new Button("add");
 		delete.setOnAction(this);
-		
+
 		save = new Button("Save");
 		save.setOnAction(this);
 		
-		 leaderboard = new Label("Leaderboard:");		 
-		 player1 = new Label("Player 1:");
-		 player2 = new Label("Player 2:");
-		 player3 = new Label("Player 3:");
-		 
-		 score1 = new Label("1,000");
-		 score2 = new Label("10,000");
-		 score3 = new Label("100,000");
-		 
-		 JFrame frame = new JFrame();
-		
+		myList.add("1");
+//		File myObj = new File("leaderboard.txt");
+//		Scanner myReader = new Scanner(myObj);
+//		myObj.createNewFile();
+//		while (myReader.hasNextLine()) {
+//		        String scores = myReader.nextLine();
+//		        myList.add(scores);
+//		      }
+//		
+//		Timer myTimer = new Timer();
+//        myTimer.schedule(new TimerTask(){
+//
+//          @Override
+//          public void run() {
+//        	  String data = myList.display();
+//        	  scores.setText(data);;
+//          }
+//        }, 3000);
+
+		leaderboard = new Label("Leaderboard:");
 
 		this.add(leaderboard, 0, 2);
 		leaderboard.setFont(new Font("Eurostile", 25));
-		
-		this.add(player1, 44, 2);
-		this.add(score1, 45, 2);
-		
-		this.add(player2, 46, 2);
-		this.add(score2, 47, 2);
 
-		this.add(player3, 48, 2);
-		this.add(score3, 49, 2);
+		this.add(scores, 44, 2);
 
 		this.add(pastTF, 50, 2);
 		this.add(delete, 52, 2);
 		this.add(save, 53, 2);
-		
-		player2.setVisible(false);
-		score2.setVisible(false);
-		player3.setVisible(false);
-		score3.setVisible(false);
-		
-		int leaderboardSwitch = 0;
-		while(leaderboardSwitch > 0 && leaderboardSwitch < 100) {
-		new TimerDemo(5);
-		leaderboardSwitch++;
-		if(leaderboardSwitch % 2 == 0) {
-			player1.setVisible(false);
-			score1.setVisible(false);
-			player2.setVisible(true);
-			score2.setVisible(true);
-			player3.setVisible(false);
-			score3.setVisible(false);
-		}
-		}
+	 
+//		timer = new TimerBoard(4,scores); 
+
+//		int leaderboardSwitch = 0;
+//		while (leaderboardSwitch > 0 && leaderboardSwitch < 100) {
+//			new TimerBoard(5,pastTF);
+//			leaderboardSwitch++;
+//
+//	}
 	}
-    
-	
+	public static void main(String[] args) {
+		System.out.println(myList.show(1));
+		System.out.println(myList.show(2));
+		System.out.println(myList.show(3));
 	}
 
+}

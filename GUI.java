@@ -1,5 +1,7 @@
 package deal.Game;
 
+import java.io.IOException;
+
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -63,7 +65,12 @@ public class GUI extends BorderPane {
 	public GUI() {
 		moneyHB = new moneyBoard();
 		ordersVB = new InstructionsPane(this);
-		topGP = new TopPane();
+		try {
+			topGP = new TopPane();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		bottomGP = new BottomPane(this);
 		stairsVB = new StairsPane(cases,this);
 

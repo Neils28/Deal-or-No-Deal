@@ -27,12 +27,8 @@ public class Bank extends HBox implements EventHandler<ActionEvent> {
 
 	private Button Deal;
 	private Button No_Deal;
-	private Button test;
-	private Button casesConfirmationButton;
 
 	private GUI[] temp;
-
-	private JFrame popup;
 
 	public Button getDeal() {
 		return Deal;
@@ -42,45 +38,37 @@ public class Bank extends HBox implements EventHandler<ActionEvent> {
 		return No_Deal;
 	}
 
-	public TextField getOffer() {
-		return Offer;
-	}
-
-	public Button getConfirmation() {
-		return casesConfirmationButton;
-	}
-
 	public Bank(GUI gui) {
 		temp = new GUI[1];
 		temp[0] = gui;
 
 		DropShadow shadow = new DropShadow();
-		
-		casesConfirmationButton = new Button("These are my Cases");
-		casesConfirmationButton.setOnAction(this);
-		casesConfirmationButton.setVisible(false);
+
 		Deal = new Button("Deal");
-		No_Deal = new Button("No Deal");
+		Deal.setMaxWidth(80);
+		Deal.setPrefWidth(80);
 		Deal.setEffect(shadow);
 		Deal.setStyle("-fx-background-color: GOLD; -fx-text-fill: BLACK;");
-		No_Deal.setEffect(shadow);
-		No_Deal.setStyle("-fx-background-color: BLACK; -fx-text-fill: GOLD;");
 		Deal.setOnAction(this);
 		Deal.setDisable(true);
+
+		No_Deal = new Button("No Deal");
+		No_Deal.setMaxWidth(80);
+		No_Deal.setPrefWidth(80);
+		No_Deal.setEffect(shadow);
+		No_Deal.setStyle("-fx-background-color: BLACK; -fx-text-fill: GOLD;");
 		No_Deal.setOnAction(this);
 		No_Deal.setDisable(true);
 
 		Offer = new TextField();
 		Offer.setFont(new Font("Eurostile", 15));
-		
+
 		Offer.setEffect(shadow);
 		Offer.setStyle("-fx-background-color: GOLD; -fx-text-fill: BLACK;");
 
 		Offer.setEditable(false);
 		this.setSpacing(10);
-		test = new Button();
-		test.setOnAction(this);
-		this.getChildren().addAll(casesConfirmationButton, test, Deal, No_Deal, Offer);
+		this.getChildren().addAll(Deal, No_Deal, Offer);
 	}
 
 	/**
@@ -106,16 +94,16 @@ public class Bank extends HBox implements EventHandler<ActionEvent> {
 			Label winner = new Label("You won " + Offer.getText() + "!");
 			winner.setFont(new Font("Impact", 20));
 			winner.setTextFill(Color.GOLD);
-			
+
 			Label score = new Label("You can add your score at the top.");
 			score.setFont(new Font("Consolas", 10));
 			score.setTextFill(Color.GOLD);
-			
+
 			temp.add(winner, 8, 5);
-			temp.setColumnSpan(winner,15);
-			
+			temp.setColumnSpan(winner, 15);
+
 			temp.add(score, 4, 7);
-			temp.setColumnSpan(score,20);
+			temp.setColumnSpan(score, 20);
 			this.setScene(new Scene(temp, 230, 100));
 		}
 
@@ -128,6 +116,9 @@ public class Bank extends HBox implements EventHandler<ActionEvent> {
 			Deal.setDisable(true);
 			temp[0].nextM();
 			Offer.clear();
+			for (int i = 0; i < temp[0].getSP().getCN().size(); i++) {
+				temp[0].getSP().getCN().get(i).setDisable(false);
+			}
 		}
 		if (event.getSource() == Deal && (Offer.getText().equals("") || (Offer.getText().equals(null)) == false)) {
 			No_Deal.setDisable(true);
@@ -136,9 +127,6 @@ public class Bank extends HBox implements EventHandler<ActionEvent> {
 
 			popup.show();
 			Offer.clear();
-		}
-		if (event.getSource() == test) {
-			temp[0].nextM();
 		}
 	}
 }

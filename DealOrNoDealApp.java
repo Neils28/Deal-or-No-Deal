@@ -21,27 +21,24 @@ public class DealOrNoDealApp {
 	// Button to take Deal from Banker
 	private Bank Deal;
 
-//	// This is instance of the PriorityQueueLogic class
-//	PriorityQueueLogic priorityQueueInstance = new PriorityQueueLogic(temp[0]);
-
 	private PriorityQueueLogic[] PQL;
 
 	private StairsPane[] SPI;
 
 	private int[] numCases;
-	// Button that sends cases to the Queue
-//	private Button casesConfirmationButton;
-//	public Button getConfirmBT() {
-//		return casesConfirmationButton;
-//	}
 
 	private GUI[] temp;
+
 	// Create an array of the caseNumbers that are chosen
-	private ArrayList<Integer> caseNumbers = new ArrayList<Integer>();
+	private ArrayList<Button> caseNumbers;
+
+	public ArrayList<Button> getCN() {
+		return caseNumbers;
+	}
 
 	Case cases = new Case();
 
-	public DealOrNoDealApp(HBox stair, int[] casesArrayT, int start, int end, int RNum, GUI gui,
+	public DealOrNoDealApp(HBox stair, int[] casesArrayT, int start, int end, ArrayList<Button> CN, GUI gui,
 			PriorityQueueLogic priorityQueueInstance, StairsPane SP, int chosenNumCases) {
 		PQL = new PriorityQueueLogic[1];
 		PQL[0] = priorityQueueInstance;
@@ -51,54 +48,60 @@ public class DealOrNoDealApp {
 		SPI[0] = SP;
 		numCases = new int[1];
 		numCases[0] = chosenNumCases;
+//		caseNumbers = ArrayList<Button>[1];
+//		caseNumbers[0] = cN;
+		caseNumbers = CN;
 		for (int i = start; i < end; i++) {
-			currentRoundNum = new int[1];
-			currentRoundNum[0] = RNum;
+
 			Button caseButton = new Button(Integer.toString(casesArrayT[i]));
 			// Customize the appearance of the button to look like a briefcase
+			caseButton.setMaxWidth(60);
+			caseButton.setPrefWidth(60);
+			caseButton.setMinWidth(60);
 			caseButton.setStyle("-fx-background-color: #D3D3D3; -fx-font-size: 18;");
 
-			caseNumbers.add((Integer) i);
+			caseNumbers.add(caseButton);
 			// Pass the value of the button to the event handler, so th
-			caseButton.setOnAction(event -> handleButtonClicked(event, caseNumbers, caseButton));
-			SPI[0].getConfirmBT().setOnAction(event -> handleButtonClicked(event, caseNumbers,caseButton));
+			caseButton.setOnAction(event -> handleButtonClicked(event, caseButton));
 
 			stair.getChildren().add(caseButton);
 		}
 	}
 
-	public void handleButtonClicked(ActionEvent event, ArrayList<Integer> caseNumbers,Button caseButton) {
-		
+	public void handleButtonClicked(ActionEvent event, Button caseButton) {
+		caseButton.setVisible(false);
 		// This is for Round 1 and 8: where only one case is chosen
-		if (currentRoundNum[0] == 1 || currentRoundNum[0] == 8) {
-			numCases[0]++; // Number of cases chosen increases
-//			SPI[0].getConfirmBT().setVisible(true);
+		if (temp[0].getSP().getNumRound() < 2) {
+			System.out.println("part 1");
 			PQL[0].addChosenCase(caseButton);
+			System.out.println("Added " + caseButton.getText());
 			temp[0].nextM();
-			currentRoundNum[0]++;
-			numCases[0] = 0;
+			temp[0].getSP().incrNumRound();
 		}
-//					Deal.setVisible(true); // Changes the Deal button to visible
-//		PQL[0].addChosenCase(caseNumbers); // Send the caseNumber to PriorityQueueLogic
-//				}
 		// This is for Round 2-7: where four cases are chosen and sent to the Queue
-		if (currentRoundNum[0] > 1 || currentRoundNum[0] < 8) {
-				if (numCases[0] < 4) {
-					PQL[0].addChosenCase(caseButton);
-					numCases[0]++; // Number of cases chosen increases
+		else if (temp[0].getSP().getNumRound() > 1 && temp[0].getSP().getNumRound() < 8) {
+			if (temp[0].getSP().getNumCases() < 3) {
+				PQL[0].addChosenCase(caseButton);
+				temp[0].getSP().incrNumCases(); // Number of cases chosen increases
+			} else {
+				PQL[0].addChosenCase(caseButton);
+				temp[0].getSP().incrNumCases();
+				temp[0].getSP().incrNumRound(); // Increase the current Round 1
+				temp[0].getBP().getQCase().setText(String.valueOf(PQL[0].pull()));
+				temp[0].getBP().getQCase().setDisable(false);
+				temp[0].nextM();
+				temp[0].getSP().resetNumCases();
+				for (int i = 0; i < caseNumbers.size(); i++) {
+					caseNumbers.get(i).setDisable(true);
 				}
-				if (numCases[0] == 4) {
-					PQL[0].addChosenCase(caseButton);
-					currentRoundNum[0]++; // Increase the current Round 1
-					temp[0].nextM();
-					numCases[0] = 0;
-				}
-		}
-		// This is the end of the Game
-		if (event.getSource() == Deal || currentRoundNum[0] > 8) {
-			System.out.println("Congratulations. Game over brother");
-			// TODO Change this GUI later, this pops up when the deal button is clicked that
-			// ends the game
+			}
+		} else {
+			String lastCase = caseButton.getText();
+			temp[0].getBP().getQCase().setText(lastCase);
+			temp[0].getBP().getQCase().setDisable(false);
+			temp[0].getBP().getPersonal().setDisable(false);
+			temp[0].getBP().setLastRound();
+		
 		}
 	}
 }
