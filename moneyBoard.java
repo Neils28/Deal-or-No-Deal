@@ -26,15 +26,13 @@ import javafx.scene.text.Font;
  * @author Nash Kraemer 11/30/2023
  */
 
-public class moneyBoard extends HBox implements EventHandler<ActionEvent>{
+public class moneyBoard extends HBox implements EventHandler<ActionEvent> {
 
 	private ArrayList<Integer> remaining;
 	private SortedLinkedList<Integer> out;
-	
+
 	private VBox remainingMN;
 	private VBox outMN;
-	
-	private Button test;
 
 	/**
 	 * method to move the numbers from remaining to out
@@ -48,12 +46,12 @@ public class moneyBoard extends HBox implements EventHandler<ActionEvent>{
 
 	public moneyBoard() {
 		this.setPrefHeight(200);
+		this.setMaxHeight(200);
 
-		String cssLayout = "-fx-border-color: GOLD;\n" +
-                "-fx-border-insets: 0;\n" +
-                "-fx-border-width: 3;\n" +
-                "-fx-border-style: Dotted;\n";
-		
+		String cssLayout = "-fx-border-color: GOLD;\n" + "-fx-border-insets: 0;\n" + "-fx-border-width: 8;\n"
+				+ "-fx-border-style: Solid;\n";
+		this.setStyle(cssLayout);
+
 		VBox remainingVB = new VBox(2);
 		remainingVB.setStyle("-fx-background-color: BLACK;");
 		remainingVB.setMaxHeight(700);
@@ -63,13 +61,13 @@ public class moneyBoard extends HBox implements EventHandler<ActionEvent>{
 		outVB.setMaxHeight(700);
 		outVB.setPrefHeight(700);
 
-		Label remainingLB = new Label("REMAINING"); 
-		remainingLB.setPadding(new Insets(20, 20, 10, 20));
+		Label remainingLB = new Label("REMAINING");
+		remainingLB.setPadding(new Insets(20, 20, 10, 25));
 		remainingLB.setTextFill(Color.GOLD);
 		remainingLB.setFont(new Font("Impact", 24));
 
-		Label outLB = new Label("OUT");
-		outLB.setPadding(new Insets(20, 20, 10, 55));
+		Label outLB = new Label("SELECTED");
+		outLB.setPadding(new Insets(20, 10, 10, 35));
 		outLB.setTextFill(Color.GOLD);
 		outLB.setFont(new Font("Impact", 24));
 
@@ -78,20 +76,20 @@ public class moneyBoard extends HBox implements EventHandler<ActionEvent>{
 		gp.setVgap(0);
 		gp.setGridLinesVisible(true);
 
-		Line horLine = new Line(10.0f, 10.0f, 155.0f, 10.0f);
+		Line horLine = new Line(10.0f, 10.0f, 158.0f, 10.0f);
 		horLine.setStyle("-fx-stroke: GOLD;");
 		horLine.setStrokeWidth(8.0);
 		Group group2 = new Group(horLine);
 		horLine.setTranslateX(100);
 		horLine.setTranslateY(100);
 
-		Line horLine2 = new Line(10.0f, 10.0f, 155.0f, 10.0f);
+		Line horLine2 = new Line(10.0f, 10.0f, 158.0f, 10.0f);
 		horLine2.setStyle("-fx-stroke: GOLD;");
 		horLine2.setStrokeWidth(8.0);
 		Group group3 = new Group(horLine2);
 		horLine.setTranslateX(100);
 		horLine.setTranslateY(100);
-		
+
 		Line vertLine = new Line(10.0f, 50.0f, 10.0f, 742.0f);
 		Group group = new Group(vertLine);
 		vertLine.setStyle("-fx-stroke: GOLD;");
@@ -99,8 +97,7 @@ public class moneyBoard extends HBox implements EventHandler<ActionEvent>{
 		vertLine.setTranslateX(100);
 		vertLine.setTranslateY(100);
 
-
-		this.getChildren().addAll(remainingVB,group, outVB);
+		this.getChildren().addAll(remainingVB, group, outVB);
 
 		remaining = new ArrayList<>();
 
@@ -133,7 +130,7 @@ public class moneyBoard extends HBox implements EventHandler<ActionEvent>{
 
 		remainingMN = new VBox(2);
 		outMN = new VBox(2);
-		
+
 		for (int i = 0; i < remaining.size(); i++) {
 			int temp = remaining.get(i);
 			String s = String.valueOf(temp);
@@ -143,18 +140,16 @@ public class moneyBoard extends HBox implements EventHandler<ActionEvent>{
 			L.setTextFill(Color.GOLD);
 			remainingMN.getChildren().addAll(L);
 		}
-		
-		remainingVB.getChildren().addAll(remainingLB, group2,remainingMN);
-		outVB.getChildren().addAll(outLB, group3,outMN);
-		
+
+		remainingVB.getChildren().addAll(remainingLB, group2, remainingMN);
+		outVB.getChildren().addAll(outLB, group3, outMN);
+
 		out = new SortedLinkedList<>();
-		test = new Button();
-		test.setOnAction(this);
-		this.getChildren().addAll(test);
 	}
 
 	/**
 	 * Moves the Money from "Remaining" to "Out"
+	 * 
 	 * @param value The Money that needs to be moved
 	 */
 	public Integer remove(Integer value) {
@@ -169,13 +164,13 @@ public class moneyBoard extends HBox implements EventHandler<ActionEvent>{
 			L.setTextFill(Color.GOLD);
 			remainingMN.getChildren().addAll(L);
 		}
-		
+
 		out.addItem(value);
-		
+
 		ListNode<Integer> node = out.getHead().getNext();
 		String s = String.valueOf(node.getData());
 		outMN.getChildren().clear();
-		for (int i = 0; i< out.getSize();i++) {
+		for (int i = 0; i < out.getSize(); i++) {
 			int temp = node.getData();
 			s = String.valueOf(temp);
 			Label L = new Label("$" + s);
@@ -187,24 +182,25 @@ public class moneyBoard extends HBox implements EventHandler<ActionEvent>{
 		}
 		return value;
 	}
-	
-	//Method to get a random amount from the ArrayList remaining, with the case values
-		public Integer getRandomAmount() {
-			//Random Number value created
-			Random randomMonValue = new Random();
-			
-			// Get a random index from the remaining ArrayList
-		    int randomIndex = randomMonValue.nextInt(remaining.size());
-		    
-		    // Get the value at the random index
-	        Integer randomAmount = remaining.get(randomIndex);
-	        
-		    // Remove the picked element from the ArrayList
-	        remaining.remove(randomIndex);
-		    
-		    return randomAmount; //Random Value from the ArrayList
-		}
-	
+
+	// Method to get a random amount from the ArrayList remaining, with the case
+	// values
+	public Integer getRandomAmount() {
+		// Random Number value created
+		Random randomMonValue = new Random();
+
+		// Get a random index from the remaining ArrayList
+		int randomIndex = randomMonValue.nextInt(remaining.size());
+
+		// Get the value at the random index
+		Integer randomAmount = remaining.get(randomIndex);
+
+		// Remove the picked element from the ArrayList
+		remaining.remove(randomIndex);
+
+		return randomAmount; // Random Value from the ArrayList
+	}
+
 	public Integer getTotal() {
 		Integer temp = (Integer) 0;
 		for (int i = 0; i < remaining.size(); i++) {
@@ -212,11 +208,11 @@ public class moneyBoard extends HBox implements EventHandler<ActionEvent>{
 		}
 		return temp;
 	}
-	
+
 	public int getSize() {
 		return remaining.size();
 	}
-	
+
 	@Override
 	public void handle(ActionEvent event) {
 		remove((Integer) 500);
