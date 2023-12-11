@@ -21,23 +21,29 @@ public class DealOrNoDealApp {
 	// Button to take Deal from Banker
 	private Bank Deal;
 
+	//PriorityQueueLogic class instance
 	private PriorityQueueLogic[] PQL;
 
+	//StairsPane instance
 	private StairsPane[] SPI;
-
+	
+	//Array of the Case Numbers
 	private int[] numCases;
-
+	
 	private GUI[] temp;
 
 	// Create an array of the caseNumbers that are chosen
 	private ArrayList<Button> caseNumbers;
 
+	//Return the Number from the cases, from ArrayList of Buttons
 	public ArrayList<Button> getCN() {
 		return caseNumbers;
 	}
-
+	
+	//Created instance of Case class
 	Case cases = new Case();
-
+	
+	//Method which adds the Data Structures to the GUI class
 	public DealOrNoDealApp(HBox stair, int[] casesArrayT, int start, int end, ArrayList<Button> CN, GUI gui,
 			PriorityQueueLogic priorityQueueInstance, StairsPane SP, int chosenNumCases) {
 		PQL = new PriorityQueueLogic[1];
@@ -51,8 +57,9 @@ public class DealOrNoDealApp {
 //		caseNumbers = ArrayList<Button>[1];
 //		caseNumbers[0] = cN;
 		caseNumbers = CN;
+		
+		//Creates an Array of Buttons 1-26 all named caseButton
 		for (int i = start; i < end; i++) {
-
 			Button caseButton = new Button(Integer.toString(casesArrayT[i]));
 			// Customize the appearance of the button to look like a briefcase
 			caseButton.setMaxWidth(60);
@@ -67,9 +74,10 @@ public class DealOrNoDealApp {
 			stair.getChildren().add(caseButton);
 		}
 	}
-
+	
+	//Event Handler to handle the Buttons being clicked
 	public void handleButtonClicked(ActionEvent event, Button caseButton) {
-		caseButton.setVisible(false);
+		caseButton.setVisible(false); //Set the case Button to visible
 		// This is for Round 1 and 8: where only one case is chosen
 		if (temp[0].getSP().getNumRound() < 2) {
 			System.out.println("part 1");
@@ -95,13 +103,13 @@ public class DealOrNoDealApp {
 					caseNumbers.get(i).setDisable(true);
 				}
 			}
-		} else {
+		} else { //This is where you can choose between the last case and or your case
 			String lastCase = caseButton.getText();
 			temp[0].getBP().getQCase().setText(lastCase);
 			temp[0].getBP().getQCase().setDisable(false);
 			temp[0].getBP().getPersonal().setDisable(false);
 			temp[0].getBP().setLastRound();
-		
+
 		}
 	}
 }

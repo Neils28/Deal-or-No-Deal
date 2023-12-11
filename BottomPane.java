@@ -21,32 +21,48 @@ import javafx.stage.Stage;
  * @version 12/1/2023
  */
 public class BottomPane extends GridPane implements EventHandler<ActionEvent> {
-
+	
+	//Bank Instance
 	private Bank bank;
+	
+	//First Case Chosen/ Personal Case
 	private Button personalCase;
+	
+	//Cases chosen that are sent to Queue 
 	private Button queueCase;
+	
+	//Amount of money displayed in pop up window
 	private TextField amountWon;
+	
+	//Variable to check if the user is in last round of the game
 	private Boolean lastRound = false;
+	
+	//Last Case left at the end of the game, which is either chosen or left
 	private String LastCase = "";
 
+	//Getter Method for the Personal Case
 	public Button getPersonal() {
 		return personalCase;
 	}
-
+	
+	//Getter Method for the Queue Cases
 	public Button getQCase() {
 		return queueCase;
 	}
 
+	//Getter Method for the Bank Value
 	public Bank getBank() {
 		return bank;
 	}
-
+	
+	//Setter Method for the Last Round of the Game 
 	public void setLastRound() {
 		lastRound = true;
 	}
 
 	private GUI[] temp;
-
+	
+	//Create BottomPane GUI which holds all of the variables specified
 	public BottomPane(GUI gui) {
 		temp = new GUI[1];
 		temp[0] = gui;
@@ -89,7 +105,7 @@ public class BottomPane extends GridPane implements EventHandler<ActionEvent> {
 		this.add(bank, 80, 3);
 
 	}
-
+	//Set stage for the BottomPane GUI
 	class endStage extends Stage {
 		endStage() {
 			GridPane temp = new GridPane();
@@ -113,16 +129,17 @@ public class BottomPane extends GridPane implements EventHandler<ActionEvent> {
 		}
 
 	}
-
+	//Event Handler
+	@Override
 	public void handle(ActionEvent event) {
-		if (lastRound) {
-			if (event.getSource() == queueCase) {
+		if (lastRound) { //Handles if the last round of the game
+			if (event.getSource() == queueCase) { //Queue case is chosen game ends and random value is chosen
 				queueCase.setText("");
 				Integer temporary = temp[0].getMB().getRandomAmount();
 				LastCase = Integer.toString(temporary);
 				queueCase.setDisable(true);
 				personalCase.setDisable(true);
-			} else if (event.getSource() == personalCase) {
+			} else if (event.getSource() == personalCase) { //Personal Case is chosen game ends and random value is chosen
 				personalCase.setText("");
 				Integer temporary = temp[0].getMB().getRandomAmount();
 				LastCase = Integer.toString(temporary);
@@ -133,7 +150,7 @@ public class BottomPane extends GridPane implements EventHandler<ActionEvent> {
 			endStage popup = new endStage();
 			popup.show();
 			return;
-		} else if (event.getSource() == queueCase) {
+		} else if (event.getSource() == queueCase) { //If not the last round and Queue Case chosen, continue game
 			Integer money = temp[0].getMB().remove(temp[0].getMB().getRandomAmount());
 			String sMoney = "$" + Integer.toString(money);
 

@@ -22,22 +22,29 @@ import javafx.stage.Popup;
 import javafx.stage.Stage;
 
 public class Bank extends HBox implements EventHandler<ActionEvent> {
-
+	
+	//TextField that stores the bank offer
 	private TextField Offer;
 
+	//Deal Button
 	private Button Deal;
+	
+	//No Deal Button
 	private Button No_Deal;
 
 	private GUI[] temp;
-
+	
+	//Getter Method for the Deal Button
 	public Button getDeal() {
 		return Deal;
 	}
-
+	
+	//Getter Method for the No Deal Button
 	public Button getNoDeal() {
 		return No_Deal;
 	}
-
+	
+	//Bank GUI Display Window 
 	public Bank(GUI gui) {
 		temp = new GUI[1];
 		temp[0] = gui;
@@ -84,7 +91,8 @@ public class Bank extends HBox implements EventHandler<ActionEvent> {
 		String bankOfferS = Integer.toString(bankOffer);
 		Offer.setText("$" + bankOfferS);
 	}
-
+	
+	//Sets the stage for the Bank GUI
 	class endStage extends Stage {
 		endStage() {
 			GridPane temp = new GridPane();
@@ -108,9 +116,10 @@ public class Bank extends HBox implements EventHandler<ActionEvent> {
 		}
 
 	}
-
+	//Event Handler
 	@Override
 	public void handle(ActionEvent event) {
+		//Continue Game if NoDeal Button is pressed
 		if (event.getSource() == No_Deal) {
 			No_Deal.setDisable(true);
 			Deal.setDisable(true);
@@ -120,6 +129,7 @@ public class Bank extends HBox implements EventHandler<ActionEvent> {
 				temp[0].getSP().getCN().get(i).setDisable(false);
 			}
 		}
+		//Display Pop up of cash won if the Deal Button is pressed
 		if (event.getSource() == Deal && (Offer.getText().equals("") || (Offer.getText().equals(null)) == false)) {
 			No_Deal.setDisable(true);
 			Deal.setDisable(true);
