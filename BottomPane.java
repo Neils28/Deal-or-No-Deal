@@ -1,4 +1,5 @@
-package deal.Game;
+package dealorNoDeal;
+
 
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
@@ -17,19 +18,24 @@ public class BottomPane extends GridPane {
 	private Button personalCase;
 	private Button queueCase;
 	
+	
 	public Button getPersonal() {
 		return personalCase;
 	}
 	
 	public Button getQCase() {
-		return personalCase;
+		return queueCase;
 	}
 	
 	public Bank getBank() {
 		return bank;
 	}
+	
+	private GUI[] temp;
 
 	public BottomPane(GUI gui) {
+		temp = new GUI[1];
+		temp[0] = gui;
 		this.setHgap(10);
 		this.setVgap(10);
 		this.setPrefHeight(100);
@@ -42,15 +48,14 @@ public class BottomPane extends GridPane {
 		this.add(queueCase,70, 3);
 		
 		
-
-		
-		
 		bank = new Bank(gui);
 		this.add(bank, 80, 3);
 
 	}
 
-	public void handle(ActionEvent event) {
-
+	public void handle(ActionEvent event, Button queueCase, Integer randomAmount) {
+		if(event.getSource() == queueCase) {
+			temp[0].getMB().getRandomAmount(randomAmount);
+		}
 	}
 }

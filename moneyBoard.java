@@ -1,8 +1,11 @@
-package deal.Game;
+package dealorNoDeal;
+
 
 import java.util.ArrayList;
+import java.util.Random;
+
 import javax.swing.JFrame;
-import deal.Game.SortedLinkedList.ListNode;
+import dealorNoDeal.SortedLinkedList.ListNode;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -125,7 +128,8 @@ public class moneyBoard extends HBox implements EventHandler<ActionEvent>{
 		test.setOnAction(this);
 		this.getChildren().addAll(test);
 	}
-
+	
+	//Remove
 	public void remove(Integer value) {
 		remaining.remove(value);
 		remainingMN.getChildren().clear();
@@ -161,6 +165,25 @@ public class moneyBoard extends HBox implements EventHandler<ActionEvent>{
 		}
 		return temp;
 	}
+	
+	//Method to get a random amount from the ArrayList remaining, with the case values
+	public Integer getRandomAmount(Integer randomAmount) {
+		//Random Number value created
+		Random randomMonValue = new Random();
+		
+		// Get a random index from the remaining ArrayList
+	    int randomIndex = randomMonValue.nextInt(remaining.size());
+	    
+	    // Get the value at the random index
+        randomAmount = remaining.get(randomIndex);
+        
+	    // Remove the picked element from the ArrayList
+        remaining.remove(randomIndex);
+	    
+	    return randomAmount; //Random Value from the ArrayList
+	}
+	
+	
 	
 	public int getSize() {
 		return remaining.size();
