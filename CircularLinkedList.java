@@ -1,4 +1,4 @@
-package lists;
+package deal.Game;
 
 public class CircularLinkedList<T> {
     private Node<T> head;
@@ -97,4 +97,3 @@ public class CircularLinkedList<T> {
         System.out.println("After deleting 2: " + myList.toString());
     }
 }
-

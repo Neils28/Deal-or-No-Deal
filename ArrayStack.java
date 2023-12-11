@@ -1,4 +1,4 @@
-package GUI;
+package deal.Game;
 
 import java.util.EmptyStackException;
 
@@ -41,7 +41,7 @@ public class ArrayStack<String> implements DSStack<String> {
 	@Override
 	public String top() {
 		if (isEmpty()) {
-			throw new EmptyStackException();
+			return null;
 		}
 		return (stack[size-1]);
 	} // top

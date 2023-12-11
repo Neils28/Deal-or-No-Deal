@@ -1,7 +1,11 @@
-package dealorNoDeal;
+package deal.Game;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.PriorityQueue;
+import java.util.Random;
+
+import javafx.scene.control.Button;
 
 public class PriorityQueueLogic extends Case {
 	// Instance of the Class Cases
@@ -14,49 +18,57 @@ public class PriorityQueueLogic extends Case {
 	PriorityQueue<Integer> priorityQueue = new PriorityQueue<>();
 
 	// Case that is popped off the PriorityQueue and then sent to the LinkedList
-	private Integer poppedCase;
+	int poppedCase;
 
 	// Display the numbers that popped off the PriorityQueue within the LinkedList
 	SortedLinkedList<Integer> CasesLL = new SortedLinkedList<>();
 	// TODO Replace this with Nathan's LinkedList
 
+	private GUI[] temp;
+
+	private ArrayList<Integer> list;
+
+	// Constructor for the Priority Queue
+	public PriorityQueueLogic(GUI gui) {
+		temp = new GUI[1];
+		temp[0] = gui;
+		this.priorityQueue = new PriorityQueue<>();
+
+		this.firstCase = null;
+
+		list = new ArrayList<Integer>();
+		list.add((Integer) 1);
+		list.add((Integer) 2);
+		list.add((Integer) 5);
+		list.add((Integer) 10);
+		list.add((Integer) 25);
+		list.add((Integer) 50);
+		list.add((Integer) 75);
+		list.add((Integer) 100);
+		list.add((Integer) 200);
+		list.add((Integer) 300);
+		list.add((Integer) 400);
+		list.add((Integer) 500);
+		list.add((Integer) 750);
+		list.add((Integer) 1000);
+		list.add((Integer) 5000);
+		list.add((Integer) 10000);
+		list.add((Integer) 25000);
+		list.add((Integer) 50000);
+		list.add((Integer) 750000);
+		list.add((Integer) 1000000);
+	}
+
 	// This is the Users case, the first case on the Queue that isn't removed
 	private Integer firstCase;
 
-	// Constructor for the Priority Queue
-	public PriorityQueueLogic() {
-		this.priorityQueue = new PriorityQueue<>();
-		this.firstCase = null;
-	}
-
 	// Method that takes in the number from of the Case and puts into the Queue
-	public void addChosenCase(ArrayList<Integer> caseNumbers) {
-		// Checks to make sure you do not reset the first case every time method
-		// restarts
-		// Also checks to make sure that the array of cases is zero before adding the first case
-		if (firstCase == null && !caseNumbers.isEmpty()) {
-			firstCase = caseNumbers.get(0);
-			caseNumbers.remove(0);
-		}
-		
-		// Add the chosen case number to the priority queue
-		priorityQueue.addAll(caseNumbers);
-
-		// Cases are Taken off the Priority Queue and then put into the LinkedList
-		if (priorityQueue.size() > 1) {
-			poppedCase = priorityQueue.poll();
-			CasesLL.addItem(poppedCase);
+	public void addChosenCase(Button caseButton) {
+		if (firstCase == null) {
+			firstCase = Integer.parseInt(caseButton.getText());
+			temp[0].getBP().getPersonal().setText(Integer.toString(firstCase));
+		}else {
+			priorityQueue.add(Integer.parseInt(caseButton.getText()));
 		}
 	}
-
-//	private static void removeFromArray(int number, int[] numbersArray) {
-//		for (int i = 0; i < numbersArray.length; i++) {
-//			if (numbersArray[i] == number) {
-//				// Shift the remaining elements to fill the gap
-//				System.arraycopy(numbersArray, i + 1, numbersArray, i, numbersArray.length - 1 - i);
-//				numbersArray[numbersArray.length - 1] = 0; // Assuming 0 is a valid placeholder for removed elements
-//				return;
-//			}
-//		}
-//	}
 }
