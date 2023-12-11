@@ -5,6 +5,10 @@ import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
+import GUI.TimerDemo.RemindTask;
+
+import java.util.Timer;
+import java.util.TimerTask;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -21,8 +25,10 @@ import javafx.scene.text.Font;
 
 public class TopPane extends GridPane implements EventHandler<ActionEvent> {
 	
+	private TimerDemo timer;
 	private TextField pastTF;
 	private Button delete;
+	private Button save;
 	private Label leaderboard;
 	private Label score1;
 	private Label score2;
@@ -30,14 +36,26 @@ public class TopPane extends GridPane implements EventHandler<ActionEvent> {
 	private Label player1;
 	private Label player2;
 	private Label player3;
+	private String savedText;
+	
+	public String getSavedText() {
+        return savedText;
+    }
 
 	public void handle(ActionEvent event) {
 		if(event.getSource() == delete) {
 			score1.setText(pastTF.getText());
 		}	
+		if(event.getSource() == save) {
+			savedText = pastTF.getText();
+		}
 	}
 	
 	public TopPane() {
+		
+		  
+		
+		savedText = ("");
 		
 		this.setPrefHeight(50);
 		this.setHgap(10);
@@ -48,6 +66,9 @@ public class TopPane extends GridPane implements EventHandler<ActionEvent> {
 		
 		delete = new Button("add");
 		delete.setOnAction(this);
+		
+		save = new Button("Save");
+		save.setOnAction(this);
 		
 		 leaderboard = new Label("Leaderboard:");		 
 		 player1 = new Label("Player 1:");
@@ -75,18 +96,28 @@ public class TopPane extends GridPane implements EventHandler<ActionEvent> {
 
 		this.add(pastTF, 50, 2);
 		this.add(delete, 52, 2);
-		delete.setOnAction(this);
-
-
+		this.add(save, 53, 2);
 		
+		player2.setVisible(false);
+		score2.setVisible(false);
+		player3.setVisible(false);
+		score3.setVisible(false);
 		
-		
-		
-		
-		
-		
-		
-		
+		int leaderboardSwitch = 0;
+		while(leaderboardSwitch > 0 && leaderboardSwitch < 100) {
+		new TimerDemo(5);
+		leaderboardSwitch++;
+		if(leaderboardSwitch % 2 == 0) {
+			player1.setVisible(false);
+			score1.setVisible(false);
+			player2.setVisible(true);
+			score2.setVisible(true);
+			player3.setVisible(false);
+			score3.setVisible(false);
+		}
+		}
+	}
+    
+	
 	}
 
-}
